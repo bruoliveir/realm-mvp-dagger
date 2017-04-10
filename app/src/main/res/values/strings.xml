@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">realm-mvp-dagger</string>
+    <string name="title_activity_books">BooksActivity</string>
 </resources>

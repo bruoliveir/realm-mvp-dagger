@@ -11,11 +11,15 @@ import io.realm.annotations.PrimaryKey;
  * Copyright © 2017. All rights reserved.
  */
 
-class Publisher extends RealmObject {
+public class Publisher extends RealmObject {
 
     @PrimaryKey
     private int id;
 
     private String name;
     private RealmList<Book> books;
+
+    public Publisher() {
+        // required
+    }
 }

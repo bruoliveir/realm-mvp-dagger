@@ -11,7 +11,7 @@ import io.realm.annotations.PrimaryKey;
  * Copyright © 2017. All rights reserved.
  */
 
-class Author extends RealmObject {
+public class Author extends RealmObject {
 
     @PrimaryKey
     private int id;
@@ -19,4 +19,8 @@ class Author extends RealmObject {
     private String name;
     private String lastName;
     private RealmList<Book> books;
+
+    public Author() {
+        // required
+    }
 }

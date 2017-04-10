@@ -19,4 +19,8 @@ public class Book extends RealmObject {
     private String title;
     private Author author;
     private Publisher publisher;
+
+    public Book() {
+        // required
+    }
 }
