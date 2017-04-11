@@ -1,4 +1,4 @@
-package com.example.android.realmmvpdagger.ui;
+package com.example.android.realmmvpdagger.ui.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,7 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Adapter for the RecyclerView in BooksActivity.
+ * Adapter for the RecyclerView in BooksViewImpl.
  *
  * Created by Bruno Oliveira on 10/04/17.
  * Copyright © 2017. All rights reserved.
@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
 
 public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.ViewHolder> {
 
+    private OnBookClickListener mOnBookClickListener;
 
     @Override
     public BookListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -30,12 +31,29 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(BookListAdapter.ViewHolder holder, int position) {
-
+        holder.mTextTitle.setText("Title");
+        holder.mTextDetails.setText("Details");
+        holder.mLayoutItemContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mOnBookClickListener != null) {
+                    mOnBookClickListener.onBookClick(0);
+                }
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 15;
+    }
+
+    public void setOnBookClickListener(OnBookClickListener onBookClickListener) {
+        mOnBookClickListener = onBookClickListener;
+    }
+
+    public interface OnBookClickListener {
+        void onBookClick(int id);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
