@@ -1,7 +1,6 @@
 package com.example.android.realmmvpdagger.ui;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -29,7 +28,7 @@ import io.realm.RealmResults;
  * Copyright © 2017. All rights reserved.
  */
 
-public class BooksViewImpl extends AppCompatActivity
+public class BooksViewImpl extends BaseActivity
         implements BooksView, BookListAdapter.OnBookClickListener {
 
     @BindView(R.id.recycler_view)
@@ -47,17 +46,21 @@ public class BooksViewImpl extends AppCompatActivity
         setContentView(R.layout.activity_books);
         ButterKnife.bind(this);
 
-        configureDagger();
-
         initToolbar();
         initList();
     }
 
-    private void configureDagger() {
+    @Override
+    protected void configureDagger() {
         mBooksComponent = DaggerBooksComponent.builder()
                 .booksModule(new BooksModule())
                 .build();
         mBooksComponent.inject(this);
+    }
+
+    @Override
+    protected void closeRealm() {
+        mBooksPresenter.closeRealm();
     }
 
     private void initToolbar() {

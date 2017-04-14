@@ -15,4 +15,6 @@ public interface BooksPresenter {
     void onBookClick(int id);
 
     void onAddNewBookClick();
+
+    void closeRealm();
 }

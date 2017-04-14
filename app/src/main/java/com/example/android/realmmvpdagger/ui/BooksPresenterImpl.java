@@ -43,4 +43,9 @@ public class BooksPresenterImpl implements BooksPresenter {
     public void onAddNewBookClick() {
         booksView.showAddNewBookView();
     }
+
+    @Override
+    public void closeRealm() {
+
+    }
 }
