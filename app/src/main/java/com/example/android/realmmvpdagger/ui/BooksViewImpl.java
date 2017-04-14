@@ -5,8 +5,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
+import com.example.android.realmmvpdagger.App;
 import com.example.android.realmmvpdagger.R;
-import com.example.android.realmmvpdagger.component.BooksComponent;
 import com.example.android.realmmvpdagger.component.DaggerBooksComponent;
 import com.example.android.realmmvpdagger.model.Book;
 import com.example.android.realmmvpdagger.module.BooksModule;
@@ -31,13 +31,11 @@ import io.realm.RealmResults;
 public class BooksViewImpl extends BaseActivity
         implements BooksView, BookListAdapter.OnBookClickListener {
 
-    @BindView(R.id.recycler_view)
-    RecyclerView mRecyclerView;
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
-    @Inject
-    BooksPresenter mBooksPresenter;
-    private BooksComponent mBooksComponent;
+    @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
+    @BindView(R.id.toolbar) Toolbar mToolbar;
+
+    @Inject BooksPresenter mBooksPresenter;
+
     private BookListAdapter mBookListAdapter;
 
     @Override
@@ -52,10 +50,23 @@ public class BooksViewImpl extends BaseActivity
 
     @Override
     protected void configureDagger() {
-        mBooksComponent = DaggerBooksComponent.builder()
-                .booksModule(new BooksModule())
-                .build();
-        mBooksComponent.inject(this);
+        DaggerBooksComponent.builder()
+                            .booksModule(new BooksModule())
+                            .appComponent(App.getAppComponent())
+                            .build()
+                            .inject(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mBooksPresenter.setView(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mBooksPresenter.clearView();
     }
 
     @Override
@@ -87,16 +98,16 @@ public class BooksViewImpl extends BaseActivity
 
     @Override
     public void showBooks(RealmResults<Book> books) {
-//        mBookListAdapter
+        mBookListAdapter.setBooks(books);
     }
 
     @Override
     public void showBookDetailView(int id) {
-//        startActivity();
+        //        startActivity();
     }
 
     @Override
     public void showAddNewBookView() {
-//        startActivity();
+        //        startActivity();
     }
 }

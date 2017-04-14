@@ -1,5 +1,6 @@
 package com.example.android.realmmvpdagger.ui;
 
+import com.example.android.realmmvpdagger.realm.RealmService;
 import com.example.android.realmmvpdagger.ui.presenter.BooksPresenter;
 import com.example.android.realmmvpdagger.ui.view.BooksView;
 
@@ -12,40 +13,45 @@ import com.example.android.realmmvpdagger.ui.view.BooksView;
 
 public class BooksPresenterImpl implements BooksPresenter {
 
-    private BooksView booksView = new BooksView.EmptyView();
+    private final RealmService mRealmService;
+    private BooksView mBooksView = new BooksView.EmptyView();
 
     private boolean booksWereShown = false;
 
+    public BooksPresenterImpl(final RealmService realmService) {
+        mRealmService = realmService;
+    }
+
     @Override
     public void setView(Object view) {
-        booksView = (BooksView) view;
+        mBooksView = (BooksView) view;
         showBooksIfNeeded();
     }
 
     private void showBooksIfNeeded() {
         if (!booksWereShown) {
-//            booksView.showBooks();
+            mBooksView.showBooks(mRealmService.getAllBooks());
             booksWereShown = true;
         }
     }
 
     @Override
     public void clearView() {
-        booksView = new BooksView.EmptyView();
+        mBooksView = new BooksView.EmptyView();
     }
 
     @Override
     public void onBookClick(int id) {
-        booksView.showBookDetailView(id);
+        mBooksView.showBookDetailView(id);
     }
 
     @Override
     public void onAddNewBookClick() {
-        booksView.showAddNewBookView();
+        mBooksView.showAddNewBookView();
     }
 
     @Override
     public void closeRealm() {
-
+        mRealmService.closeRealm();
     }
 }

@@ -23,7 +23,7 @@
         tools:text="Title"/>
 
     <TextView
-        android:id="@+id/text_details"
+        android:id="@+id/text_isbn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="end"

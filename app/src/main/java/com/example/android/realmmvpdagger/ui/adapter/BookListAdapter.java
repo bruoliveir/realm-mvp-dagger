@@ -8,9 +8,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.android.realmmvpdagger.R;
+import com.example.android.realmmvpdagger.model.Book;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.RealmResults;
 
 /**
  * Adapter for the RecyclerView in BooksViewImpl.
@@ -21,18 +23,21 @@ import butterknife.ButterKnife;
 
 public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.ViewHolder> {
 
+    private RealmResults<Book> mBooks;
     private OnBookClickListener mOnBookClickListener;
 
     @Override
     public BookListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_book, parent, false);
+        View view =
+                LayoutInflater.from(parent.getContext()).inflate(R.layout.item_book, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(BookListAdapter.ViewHolder holder, int position) {
-        holder.mTextTitle.setText("Title");
-        holder.mTextDetails.setText("Details");
+        Book book = mBooks.get(position);
+        holder.mTextTitle.setText(book.getTitle());
+        holder.mTextIsbn.setText(book.getIsbn());
         holder.mLayoutItemContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -45,7 +50,11 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return 15;
+        return mBooks.size();
+    }
+
+    public void setBooks(RealmResults<Book> mBooks) {
+        this.mBooks = mBooks;
     }
 
     public void setOnBookClickListener(OnBookClickListener onBookClickListener) {
@@ -58,14 +67,9 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.layout_item_container)
-        LinearLayout mLayoutItemContainer;
-
-        @BindView(R.id.text_title)
-        TextView mTextTitle;
-
-        @BindView(R.id.text_details)
-        TextView mTextDetails;
+        @BindView(R.id.layout_item_container) LinearLayout mLayoutItemContainer;
+        @BindView(R.id.text_title) TextView mTextTitle;
+        @BindView(R.id.text_isbn) TextView mTextIsbn;
 
         ViewHolder(View itemView) {
             super(itemView);

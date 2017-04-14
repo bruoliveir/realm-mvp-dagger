@@ -19,9 +19,13 @@ import io.realm.RealmConfiguration;
 
 public class App extends Application {
 
+    private static AppComponent appComponent;
     private App app;
-    private AppComponent appComponent;
     private Context context;
+
+    public static AppComponent getAppComponent() {
+        return appComponent;
+    }
 
     @Override
     public void onCreate() {
@@ -34,7 +38,8 @@ public class App extends Application {
     }
 
     private void configureDagger() {
-        appComponent = DaggerAppComponent.builder()
+        appComponent = DaggerAppComponent
+                .builder()
                 .appModule(new AppModule())
                 .build();
         appComponent.inject(this);
@@ -51,10 +56,6 @@ public class App extends Application {
 
     public App getApp() {
         return app;
-    }
-
-    public AppComponent getAppComponent() {
-        return appComponent;
     }
 
     public Context getContext() {

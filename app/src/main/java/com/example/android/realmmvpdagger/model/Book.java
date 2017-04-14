@@ -12,8 +12,7 @@ import io.realm.annotations.PrimaryKey;
 
 public class Book extends RealmObject {
 
-    @PrimaryKey
-    private int id;
+    @PrimaryKey private int id;
 
     private String isbn;
     private String title;
@@ -22,5 +21,13 @@ public class Book extends RealmObject {
 
     public Book() {
         // required
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public String getTitle() {
+        return title;
     }
 }

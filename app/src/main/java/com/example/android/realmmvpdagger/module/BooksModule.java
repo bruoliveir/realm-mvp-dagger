@@ -1,5 +1,6 @@
 package com.example.android.realmmvpdagger.module;
 
+import com.example.android.realmmvpdagger.realm.RealmService;
 import com.example.android.realmmvpdagger.ui.BooksPresenterImpl;
 import com.example.android.realmmvpdagger.ui.presenter.BooksPresenter;
 
@@ -18,7 +19,7 @@ import dagger.Provides;
 public class BooksModule {
 
     @Provides
-    BooksPresenter provideBooksPresenter() {
-        return new BooksPresenterImpl();
+    BooksPresenter provideBooksPresenter(final RealmService realmService) {
+        return new BooksPresenterImpl(realmService);
     }
 }
