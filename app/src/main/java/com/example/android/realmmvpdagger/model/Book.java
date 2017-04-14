@@ -23,6 +23,10 @@ public class Book extends RealmObject {
         // required
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String getIsbn() {
         return isbn;
     }

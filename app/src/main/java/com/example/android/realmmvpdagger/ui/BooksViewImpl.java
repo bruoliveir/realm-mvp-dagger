@@ -84,6 +84,7 @@ public class BooksViewImpl extends BaseActivity
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mBookListAdapter);
+        mRecyclerView.setHasFixedSize(true);
     }
 
     @OnClick(R.id.fab)

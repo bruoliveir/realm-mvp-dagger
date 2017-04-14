@@ -27,22 +27,22 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.ViewHo
     private OnBookClickListener mOnBookClickListener;
 
     @Override
-    public BookListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view =
-                LayoutInflater.from(parent.getContext()).inflate(R.layout.item_book, parent, false);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                                  .inflate(R.layout.item_book, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(BookListAdapter.ViewHolder holder, int position) {
-        Book book = mBooks.get(position);
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        final Book book = mBooks.get(position);
         holder.mTextTitle.setText(book.getTitle());
         holder.mTextIsbn.setText(book.getIsbn());
         holder.mLayoutItemContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mOnBookClickListener != null) {
-                    mOnBookClickListener.onBookClick(0);
+                    mOnBookClickListener.onBookClick(book.getId());
                 }
             }
         });
@@ -53,8 +53,9 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.ViewHo
         return mBooks.size();
     }
 
-    public void setBooks(RealmResults<Book> mBooks) {
-        this.mBooks = mBooks;
+    public void setBooks(RealmResults<Book> books) {
+        mBooks = books;
+        notifyDataSetChanged();
     }
 
     public void setOnBookClickListener(OnBookClickListener onBookClickListener) {
