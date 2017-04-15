@@ -12,6 +12,7 @@ import com.example.android.realmmvpdagger.model.Book;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
 /**
@@ -21,20 +22,19 @@ import io.realm.RealmResults;
  * Copyright © 2017. All rights reserved.
  */
 
-public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.ViewHolder> {
+public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.ViewHolder> implements
+        RealmChangeListener<RealmResults<Book>> {
 
     private RealmResults<Book> mBooks;
     private OnBookClickListener mOnBookClickListener;
 
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                                  .inflate(R.layout.item_book, parent, false);
+                .inflate(R.layout.item_book, parent, false);
         return new ViewHolder(view);
     }
 
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    @Override public void onBindViewHolder(ViewHolder holder, int position) {
         final Book book = mBooks.get(position);
         holder.mTextTitle.setText(book.getTitle());
         holder.mTextIsbn.setText(book.getIsbn());
@@ -48,13 +48,13 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.ViewHo
         });
     }
 
-    @Override
-    public int getItemCount() {
+    @Override public int getItemCount() {
         return mBooks.size();
     }
 
     public void setBooks(RealmResults<Book> books) {
         mBooks = books;
+        mBooks.addChangeListener(this);
         notifyDataSetChanged();
     }
 
@@ -62,11 +62,15 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.ViewHo
         mOnBookClickListener = onBookClickListener;
     }
 
+    @Override public void onChange(RealmResults<Book> books) {
+        notifyDataSetChanged();
+    }
+
     public interface OnBookClickListener {
         void onBookClick(int id);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.layout_item_container) LinearLayout mLayoutItemContainer;
         @BindView(R.id.text_title) TextView mTextTitle;

@@ -27,4 +27,31 @@ public class RealmService {
     public RealmResults<Book> getAllBooks() {
         return mRealm.where(Book.class).findAll();
     }
+
+    public void addBookAsync(final String title, final String isbn,
+            final OnTransactionCallback onTransactionCallback) {
+
+        mRealm.executeTransactionAsync(new Realm.Transaction() {
+            @Override public void execute(Realm realm) {
+                Book book = new Book();
+                book.setId(realm.where(Book.class).findAll().size());
+                book.setTitle(title);
+                book.setIsbn(isbn);
+                realm.copyToRealm(book);
+            }
+        }, new Realm.Transaction.OnSuccess() {
+            @Override public void onSuccess() {
+                onTransactionCallback.onRealmSuccess();
+            }
+        }, new Realm.Transaction.OnError() {
+            @Override public void onError(Throwable error) {
+                onTransactionCallback.onRealmError(error);
+            }
+        });
+    }
+
+    public interface OnTransactionCallback {
+        void onRealmSuccess();
+        void onRealmError(final Throwable t);
+    }
 }

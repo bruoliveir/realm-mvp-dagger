@@ -1,5 +1,7 @@
 package com.example.android.realmmvpdagger.ui;
 
+import android.util.Log;
+
 import com.example.android.realmmvpdagger.realm.RealmService;
 import com.example.android.realmmvpdagger.ui.presenter.BooksPresenter;
 import com.example.android.realmmvpdagger.ui.view.BooksView;
@@ -47,7 +49,19 @@ public class BooksPresenterImpl implements BooksPresenter {
 
     @Override
     public void onAddNewBookClick() {
-        mBooksView.showAddNewBookView();
+//        mBooksView.showAddNewBookView();
+
+        // TODO: 14/04/17 Remove fake content after implementation of AddNewBookViewImpl
+        mRealmService.addBookAsync("Title " + mRealmService.getAllBooks().size(), "987-12-34567-89",
+                new RealmService.OnTransactionCallback() {
+                    @Override public void onRealmSuccess() {
+                        Log.w("MVP", "Added a book.");
+                    }
+
+                    @Override public void onRealmError(Throwable t) {
+                        Log.w("MVP", "Failed to add a book because " + t.getLocalizedMessage());
+                    }
+                });
     }
 
     @Override
