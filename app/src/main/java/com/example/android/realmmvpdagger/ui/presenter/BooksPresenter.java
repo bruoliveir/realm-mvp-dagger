@@ -9,12 +9,8 @@ package com.example.android.realmmvpdagger.ui.presenter;
 
 public interface BooksPresenter {
     void setView(Object view);
-
     void clearView();
-
     void onBookClick(int id);
-
     void onAddNewBookClick();
-
     void closeRealm();
 }

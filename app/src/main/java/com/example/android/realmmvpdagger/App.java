@@ -38,8 +38,7 @@ public class App extends Application {
     }
 
     private void configureDagger() {
-        appComponent = DaggerAppComponent
-                .builder()
+        appComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule())
                 .build();
         appComponent.inject(this);
@@ -49,7 +48,6 @@ public class App extends Application {
         Realm.init(this);
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
                 .deleteRealmIfMigrationNeeded()
-                .inMemory()
                 .build();
         Realm.setDefaultConfiguration(realmConfiguration);
     }

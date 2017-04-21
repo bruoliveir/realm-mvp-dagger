@@ -51,10 +51,10 @@ public class BooksViewImpl extends BaseActivity
     @Override
     protected void configureDagger() {
         DaggerBooksComponent.builder()
-                            .booksModule(new BooksModule())
-                            .appComponent(App.getAppComponent())
-                            .build()
-                            .inject(this);
+                .booksModule(new BooksModule())
+                .appComponent(App.getAppComponent())
+                .build()
+                .inject(this);
     }
 
     @Override

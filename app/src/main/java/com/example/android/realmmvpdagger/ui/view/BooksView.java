@@ -13,9 +13,7 @@ import io.realm.RealmResults;
 
 public interface BooksView {
     void showBooks(RealmResults<Book> books);
-
     void showBookDetailView(int id);
-
     void showAddNewBookView();
 
     class EmptyView implements BooksView {
