@@ -2,7 +2,6 @@ package com.example.android.realmmvpdagger.component;
 
 import com.example.android.realmmvpdagger.App;
 import com.example.android.realmmvpdagger.module.AppModule;
-import com.example.android.realmmvpdagger.realm.RealmService;
 
 import javax.inject.Singleton;
 
@@ -20,6 +19,4 @@ import dagger.Component;
 @Component(modules = AppModule.class)
 public interface AppComponent {
     void inject(App app);
-
-    RealmService realmService();
 }

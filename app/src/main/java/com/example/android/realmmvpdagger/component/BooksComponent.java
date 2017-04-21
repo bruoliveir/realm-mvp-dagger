@@ -14,7 +14,7 @@ import dagger.Component;
  */
 
 @ActivityScope
-@Component(dependencies = AppComponent.class, modules = BooksModule.class)
+@Component(modules = BooksModule.class)
 public interface BooksComponent {
     void inject(BooksViewImpl booksViewImpl);
 }

@@ -5,10 +5,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
-import com.example.android.realmmvpdagger.App;
 import com.example.android.realmmvpdagger.R;
 import com.example.android.realmmvpdagger.component.DaggerBooksComponent;
 import com.example.android.realmmvpdagger.model.Book;
+import com.example.android.realmmvpdagger.module.AppModule;
 import com.example.android.realmmvpdagger.module.BooksModule;
 import com.example.android.realmmvpdagger.ui.adapter.BookListAdapter;
 import com.example.android.realmmvpdagger.ui.presenter.BooksPresenter;
@@ -52,7 +52,7 @@ public class BooksViewImpl extends BaseActivity
     protected void configureDagger() {
         DaggerBooksComponent.builder()
                 .booksModule(new BooksModule())
-                .appComponent(App.getAppComponent())
+                .appModule(new AppModule())
                 .build()
                 .inject(this);
     }

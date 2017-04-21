@@ -15,7 +15,7 @@ import dagger.Provides;
  * Copyright © 2017. All rights reserved.
  */
 
-@Module
+@Module(includes = AppModule.class)
 public class BooksModule {
 
     @Provides
