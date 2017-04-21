@@ -7,7 +7,6 @@ import android.support.v7.widget.Toolbar;
 
 import com.example.android.realmmvpdagger.App;
 import com.example.android.realmmvpdagger.R;
-import com.example.android.realmmvpdagger.component.DaggerBooksComponent;
 import com.example.android.realmmvpdagger.model.Book;
 import com.example.android.realmmvpdagger.module.BooksModule;
 import com.example.android.realmmvpdagger.ui.adapter.BookListAdapter;
@@ -50,9 +49,9 @@ public class BooksViewImpl extends BaseActivity
 
     @Override
     protected void configureDagger() {
-        DaggerBooksComponent.builder()
+        App.getAppComponent()
+                .booksComponent()
                 .booksModule(new BooksModule())
-                .appComponent(App.getAppComponent())
                 .build()
                 .inject(this);
     }

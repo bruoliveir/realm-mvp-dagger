@@ -4,7 +4,7 @@ import com.example.android.realmmvpdagger.module.BooksModule;
 import com.example.android.realmmvpdagger.scope.ActivityScope;
 import com.example.android.realmmvpdagger.ui.BooksViewImpl;
 
-import dagger.Component;
+import dagger.Subcomponent;
 
 /**
  * BooksComponent is an injector class that assigns references in BooksView implementations.
@@ -14,7 +14,13 @@ import dagger.Component;
  */
 
 @ActivityScope
-@Component(dependencies = AppComponent.class, modules = BooksModule.class)
+@Subcomponent(modules = BooksModule.class)
 public interface BooksComponent {
     void inject(BooksViewImpl booksViewImpl);
+
+    @Subcomponent.Builder
+    interface Builder {
+        Builder booksModule(BooksModule booksModule);
+        BooksComponent build();
+    }
 }

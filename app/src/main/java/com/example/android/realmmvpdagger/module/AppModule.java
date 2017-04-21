@@ -1,5 +1,6 @@
 package com.example.android.realmmvpdagger.module;
 
+import com.example.android.realmmvpdagger.component.BooksComponent;
 import com.example.android.realmmvpdagger.realm.RealmService;
 
 import dagger.Module;
@@ -13,7 +14,7 @@ import io.realm.Realm;
  * Copyright © 2017. All rights reserved.
  */
 
-@Module
+@Module(subcomponents = BooksComponent.class)
 public class AppModule {
 
     @Provides
